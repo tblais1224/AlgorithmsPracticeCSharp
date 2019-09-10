@@ -14,7 +14,7 @@ namespace AlgorithmsPractice
             //    the hour is now x:00 and y days have passed 
             //   constraints =    starting hour: 1 <= x <= 12      hours passed: 1 <= y <= intMax   challenge: intMin <= y <= intMax
 
-            var timeMachine = new TimeMachine(12, 24012);
+            var timeMachine = new TimeMachine(3, 261);
             Console.WriteLine(timeMachine.GetTime());
         }
     }

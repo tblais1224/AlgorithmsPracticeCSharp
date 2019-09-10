@@ -8,9 +8,14 @@ namespace AlgorithmsPractice
         public int HoursPassed { get; set; }
 
         private int _days;
+
         private int _hour;
+
         private String _amPm;
+
         private String _future;
+
+
         public TimeMachine(int startHour, int hoursPassed)
         {
             if (startHour < 1 || startHour > 12)
@@ -28,9 +33,10 @@ namespace AlgorithmsPractice
         private void CalculateTime()
         {
             int totalHours = StartHour;
+            totalHours += HoursPassed;
+
             if (HoursPassed > 0)
             {
-                totalHours += HoursPassed;
                 _hour = totalHours % 24;
                 _days = totalHours / 24;
                 _future = "passed";
@@ -38,7 +44,7 @@ namespace AlgorithmsPractice
             else
             {
                 //convert to positive 
-                totalHours = -1 * (HoursPassed + totalHours);
+                totalHours *= -1;
                 _hour = 24 - totalHours % 24;
                 _days = totalHours / 24 + 1;
                 // if the hour is 24 then subtract a day because the same day is starting at 12:00am
