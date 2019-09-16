@@ -1,38 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlgorithmsPractice
 {
-    static class Program
+    public class ChocolateBarDivider
     {
-        public class YearRelationship
+        public List<int> NumbersOnSquares { get; set; }
+        public int BirthDay { get; set; }
+        public int BirthMonth { get; set; }
+        private int _waysToPortionBar = 0;
+
+        public ChocolateBarDivider(List<int> numbersOnSquares, int birthDay, int birthMonth)
         {
-            public float Year { get; set; }
-            public float Month { get; set; }
-
-            private readonly float _currentMonth = DateTime.Now.Month;
-            private readonly float _currentYear = DateTime.Now.Year;
-            public YearRelationship(int year, int month)
-            {
-                Year = year;
-                Month = month;
-            }
-
-            public double DetermineDateRelationship()
-            {
-                return Year > _currentYear ? Math.Round((Year - _currentYear + (Month - _currentMonth) / 12), 2) : Math.Round(_currentYear - Year + (_currentMonth - Month) / 12, 2);
-            }
+            NumbersOnSquares = numbersOnSquares;
+            BirthDay = birthDay;
+            BirthMonth = birthMonth;
         }
+
+        public int GetPortions()
+        {
+            var checkNumbers = new List<int>();
+
+            foreach (var numberOnSquare in NumbersOnSquares)
+            {
+                checkNumbers.Add(numberOnSquare);
+                if (checkNumbers.Count != BirthMonth) continue;
+
+                if (checkNumbers.Take(BirthMonth).Sum() == BirthDay)
+                    _waysToPortionBar++;
+
+                checkNumbers.RemoveAt(0);
+            }
+
+            return _waysToPortionBar;
+        }
+    }
+    class Solution
+    {
+
+        // Complete the birthday function below.
+        static int birthday(List<int> s, int d, int m)
+        {
+            var chocolateBarDivider = new ChocolateBarDivider(s, d, m);
+            return chocolateBarDivider.GetPortions();
+        }
+
         static void Main(string[] args)
         {
-            //TODO: Given a month and year determine the 2 decimal year value in relation to today.  input = year month, output = x.xx years
+            int n = 5;
 
-            var yearRelationship = new YearRelationship(2018, 10);
+            List<int> s = new List<int> { 1, 2, 1, 3, 2 };
 
-            Console.WriteLine(yearRelationship.DetermineDateRelationship());
+            int d = 3;
+
+            int m = 2;
+
+            int result = birthday(s, d, m);
+
+            Console.WriteLine(result);
         }
     }
 }
