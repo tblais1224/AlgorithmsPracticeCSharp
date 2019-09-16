@@ -1,65 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
-class Solution
+namespace AlgorithmsPractice
 {
-
-    // Complete the sockMerchant function below.
-    public class Merchant
+    public class ChocolateBarDivider
     {
-        public int NumberOfSocks { get; set; }
-        public List<int> Socks { get; set; }
-        public int Pairs { get; set; }
-        public Merchant(int numberOfSocks, int[] socks)
+        public List<int> NumbersOnSquares { get; set; }
+        public int BirthDay { get; set; }
+        public int BirthMonth { get; set; }
+        private int _waysToPortionBar = 0;
+
+        public ChocolateBarDivider(List<int> numbersOnSquares, int birthDay, int birthMonth)
         {
-            if (numberOfSocks <= 100 && numberOfSocks >= 1)
-            {
-                NumberOfSocks = numberOfSocks;
-                Socks = new List<int>(socks);
-                Pairs = 0;
-            }
-            else
-            {
-                throw new InvalidOperationException("doesn't fit constraints");
-            }
+            NumbersOnSquares = numbersOnSquares;
+            BirthDay = birthDay;
+            BirthMonth = birthMonth;
         }
 
-        private void MatchSocks()
+        public int GetPortions()
         {
-            List<int> socksCopy = new List<int>();
-            foreach (var sock in Socks)
-            {
-                if (socksCopy.Contains(sock))
-                {
-                    Pairs++;
-                    socksCopy.Remove(sock);
-                }
-                else
-                {
-                    socksCopy.Add(sock);
-                }
-            }
-        }
+            var checkNumbers = new List<int>();
 
-        public int GetPairs()
-        {
-            MatchSocks();
-            return Pairs;
+            foreach (var numberOnSquare in NumbersOnSquares)
+            {
+                checkNumbers.Add(numberOnSquare);
+                if (checkNumbers.Count != BirthMonth) continue;
+
+                if (checkNumbers.Take(BirthMonth).Sum() == BirthDay)
+                    _waysToPortionBar++;
+
+                checkNumbers.RemoveAt(0);
+            }
+
+            return _waysToPortionBar;
         }
     }
-    static int SockMerchant(int n, int[] ar)
-    {
-        var merchant = new Merchant(n, ar);
-        return merchant.GetPairs();
-    }
-
-    static void Main(string[] args)
+    class Solution
     {
 
-        int n = 9;
-        int[] ar = { 10, 20, 20, 10, 10, 30, 50, 10, 20 };
+        // Complete the birthday function below.
+        static int birthday(List<int> s, int d, int m)
+        {
+            var chocolateBarDivider = new ChocolateBarDivider(s, d, m);
+            return chocolateBarDivider.GetPortions();
+        }
 
-        int result = SockMerchant(n, ar);
-        Console.WriteLine(result);
+        static void Main(string[] args)
+        {
+            int n = 5;
+
+            List<int> s = new List<int> { 1, 2, 1, 3, 2 };
+
+            int d = 3;
+
+            int m = 2;
+
+            int result = birthday(s, d, m);
+
+            Console.WriteLine(result);
+        }
     }
 }
