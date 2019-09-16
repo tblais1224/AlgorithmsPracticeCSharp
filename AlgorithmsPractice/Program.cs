@@ -6,16 +6,33 @@ using System.Threading.Tasks;
 
 namespace AlgorithmsPractice
 {
-    class Program
+    static class Program
     {
+        public class YearRelationship
+        {
+            public float Year { get; set; }
+            public float Month { get; set; }
+
+            private readonly float _currentMonth = DateTime.Now.Month;
+            private readonly float _currentYear = DateTime.Now.Year;
+            public YearRelationship(int year, int month)
+            {
+                Year = year;
+                Month = month;
+            }
+
+            public double DetermineDateRelationship()
+            {
+                return Year > _currentYear ? Math.Round((Year - _currentYear + (Month - _currentMonth) / 12), 2) : Math.Round(_currentYear - Year + (_currentMonth - Month) / 12, 2);
+            }
+        }
         static void Main(string[] args)
         {
-            // given a starting hour and number or hours passed display the following: 
-            //    the hour is now x:00 and y days have passed 
-            //   constraints =    starting hour: 1 <= x <= 12      hours passed: 1 <= y <= intMax   challenge: intMin <= y <= intMax
+            //TODO: Given a month and year determine the 2 decimal year value in relation to today.  input = year month, output = x.xx years
 
-            var timeMachine = new TimeMachine(3, 261);
-            Console.WriteLine(timeMachine.GetTime());
+            var yearRelationship = new YearRelationship(2018, 10);
+
+            Console.WriteLine(yearRelationship.DetermineDateRelationship());
         }
     }
 }
