@@ -6,31 +6,38 @@ namespace AlgorithmsPractice
 {
     static class Program
     {
-        public class YearRelationship
+        public class SumOddFibonacciNumbers
         {
-            public float Year { get; set; }
-            public float Month { get; set; }
+            public int FibsLessThanMe { get; set; }
 
-            private readonly float _currentMonth = DateTime.Now.Month;
-            private readonly float _currentYear = DateTime.Now.Year;
-            public YearRelationship(int year, int month)
+            private readonly List<int> _fibonacciNumbers = new List<int> { 0, 1 };
+
+            public SumOddFibonacciNumbers(int fibsLessThanMe)
             {
-                Year = year;
-                Month = month;
+                FibsLessThanMe = fibsLessThanMe;
             }
 
-            public double DetermineDateRelationship()
+            private void GetFibonacciNumbers()
             {
-                return Year > _currentYear ? Math.Round((Year - _currentYear + (Month - _currentMonth) / 12), 2) : Math.Round(_currentYear - Year + (_currentMonth - Month) / 12, 2);
+                while (true)
+                {
+                    var fibonacciNumber = _fibonacciNumbers[_fibonacciNumbers.Count - 1] + _fibonacciNumbers[_fibonacciNumbers.Count - 2];
+                    _fibonacciNumbers.Add(fibonacciNumber);
+                    if (fibonacciNumber + _fibonacciNumbers[_fibonacciNumbers.Count - 2] <= FibsLessThanMe) continue;
+                    break;
+                }
+            }
+
+            public int SumOddFibonacciNumber()
+            {
+                GetFibonacciNumbers();
+                return _fibonacciNumbers.Where(number => number % 2 != 0).Sum();
             }
         }
         static void Main(string[] args)
         {
-            //TODO: Given a month and year determine the 2 decimal year value in relation to today.  input = year month, output = x.xx years
-
-            var yearRelationship = new YearRelationship(2018, 10);
-
-            Console.WriteLine(yearRelationship.DetermineDateRelationship());
+            var sumFibs = new SumOddFibonacciNumbers(4000000);
+            Console.WriteLine(sumFibs.SumOddFibonacciNumber());
         }
     }
 }
