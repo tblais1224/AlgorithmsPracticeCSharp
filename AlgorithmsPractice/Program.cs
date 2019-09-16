@@ -34,7 +34,8 @@ namespace AlgorithmsPractice
                 return _fibonacciNumbers.Where(number => number % 2 != 0).Sum();
             }
         }
-        static void Main(string[] args)
+
+        private static void Main(string[] args)
         {
             var sumFibs = new SumOddFibonacciNumbers(4000000);
             Console.WriteLine(sumFibs.SumOddFibonacciNumber());
