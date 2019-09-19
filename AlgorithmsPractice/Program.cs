@@ -9,10 +9,15 @@ namespace AlgorithmsPractice
     {
         private static void Main(string[] args)
         {
-            List<int> grades = new List<int>() { 73, 67, 38, 33 };
-            var grader = new Grader(grades);
-            foreach (var grade in grader.GetFinalGrades())
-                Console.WriteLine(grade);
+            int HouseStart = 7;
+            int HouseEnd = 11;
+            int AppleTree = 5;
+            int OrangeTree = 15;
+            List<int> apples = new List<int>() { -2, 2, 1 };
+            List<int> oranges = new List<int>() { -2, 2, 1 };
+            var fruit = new FallingFruit(HouseStart, HouseEnd, AppleTree, OrangeTree, apples, oranges);
+            foreach (var num in fruit.FallingOnHouse())
+                Console.WriteLine(num);
         }
     }
 }
