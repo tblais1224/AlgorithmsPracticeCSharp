@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
 namespace AlgorithmsPractice
@@ -7,9 +9,10 @@ namespace AlgorithmsPractice
     {
         private static void Main(string[] args)
         {
-            var primes = new PrimeNumbers(977);
-            primes.GetPrimes();
-            Console.WriteLine(primes.SumPrimes());
+            List<int> grades = new List<int>() { 73, 67, 38, 33 };
+            var grader = new Grader(grades);
+            foreach (var grade in grader.GetFinalGrades())
+                Console.WriteLine(grade);
         }
     }
 }
