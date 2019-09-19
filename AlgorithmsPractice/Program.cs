@@ -7,14 +7,12 @@ namespace AlgorithmsPractice
 {
     static class Program
     {
-        public static int GetFactorialize(int numberToFactorialize)
-        {
-            if (numberToFactorialize == 0) return 1;
-            return numberToFactorialize * GetFactorialize(numberToFactorialize - 1);
-        }
         private static void Main(string[] args)
         {
-            Console.WriteLine(Program.GetFactorialize(5));
+            List<int> grades = new List<int>() { 73, 67, 38, 33 };
+            var grader = new Grader(grades);
+            foreach (var grade in grader.GetFinalGrades())
+                Console.WriteLine(grade);
         }
     }
 }
