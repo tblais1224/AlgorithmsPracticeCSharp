@@ -8,7 +8,7 @@ using Assert = NUnit.Framework.Assert;
 namespace AlgorithmTests
 {
     [TestFixture]
-    public class FallingFruitTests
+    public class BetweenSetsTests
     {
         [Test]
         public void TestMethod1()
@@ -21,7 +21,7 @@ namespace AlgorithmTests
             List<int> apples = new List<int>() { -2, 2, 1 };
             List<int> oranges = new List<int>() { 5, -6 };
             List<int> expected = new List<int>() { 1, 1 };
-            var fallingFruit = new FallingFruit(HouseStart, HouseEnd, AppleTree, OrangeTree, apples, oranges);
+            var fallingFruit = new BetweenSets(HouseStart, HouseEnd, AppleTree, OrangeTree, apples, oranges);
             Assert.AreEqual(expected, fallingFruit.FallingOnHouse());
         }
     }

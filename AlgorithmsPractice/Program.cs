@@ -9,15 +9,11 @@ namespace AlgorithmsPractice
     {
         private static void Main(string[] args)
         {
-            int HouseStart = 7;
-            int HouseEnd = 11;
-            int AppleTree = 5;
-            int OrangeTree = 15;
-            List<int> apples = new List<int>() { -2, 2, 1 };
-            List<int> oranges = new List<int>() { -2, 2, 1 };
-            var fruit = new FallingFruit(HouseStart, HouseEnd, AppleTree, OrangeTree, apples, oranges);
-            foreach (var num in fruit.FallingOnHouse())
-                Console.WriteLine(num);
+            var listA = new List<int>() { 2, 4 };
+            var listB = new List<int>() { 16, 32, 96 };
+
+            var betweenSets = new BetweenSets(listA, listB);
+            Console.WriteLine(betweenSets.IntegersBetween());
         }
     }
 }
