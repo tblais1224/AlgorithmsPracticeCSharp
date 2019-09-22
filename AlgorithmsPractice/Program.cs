@@ -5,65 +5,53 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace AlgorithmsPractice
 {
-    public class Records
-    {
-        public int[] Scores { get; set; }
-        private readonly int[] _highAndLowRecord;
-        private readonly int[] _highAndLowRecordCounter;
-
-        public Records(int[] scores)
-        {
-            Scores = scores;
-            _highAndLowRecord = new[] { scores[0], scores[0] };
-            _highAndLowRecordCounter = new[] { 0, 0 };
-        }
-
-        public int[] NumberOfTimesRecordBroken()
-        {
-            foreach (var score in Scores)
-            {
-                GetHighRecord(score);
-                GetLowRecord(score);
-            }
-
-            return _highAndLowRecordCounter;
-        }
-
-        private void GetLowRecord(int score)
-        {
-            if (score < _highAndLowRecord[1])
-            {
-                _highAndLowRecord[1] = score;
-                _highAndLowRecordCounter[1]++;
-            }
-        }
-
-        private void GetHighRecord(int score)
-        {
-            if (score > _highAndLowRecord[0])
-            {
-                _highAndLowRecord[0] = score;
-                _highAndLowRecordCounter[0]++;
-            }
-        }
-    }
     class Solution
     {
-
-        // Complete the breakingRecords function below.
-        static int[] breakingRecords(int[] scores)
+        public class SumPairs
         {
-            var records = new Records(scores);
-            return records.NumberOfTimesRecordBroken();
+            public int[] Array { get; set; }
+            public int Divisor { get; set; }
+
+            private int _numberOfPairs = 0;
+
+            public SumPairs(int[] array, int divisor)
+            {
+                Array = array;
+                Divisor = divisor;
+            }
+
+            public int GetDivisorPairs()
+            {
+                for (var i = 0; i < Array.Length; i++) GetPairsSum(Array[i], i + 1);
+
+                return _numberOfPairs;
+            }
+
+            private void GetPairsSum(int num, int numIndexPlusOne)
+            {
+                for (var i = numIndexPlusOne; i < Array.Length; i++)
+                    if ((num + Array[i]) % Divisor == 0) _numberOfPairs++;
+            }
+        }
+
+        // Complete the divisibleSumPairs function below.
+        static int divisibleSumPairs(int n, int k, int[] ar)
+        {
+            var sumPairs = new SumPairs(ar, k);
+            return sumPairs.GetDivisorPairs();
         }
 
         static void Main(string[] args)
         {
-            int[] scores = { 10, 5, 20, 20, 4, 5, 2, 25, 1 };
+            int n = 6;
 
-            int[] result = breakingRecords(scores);
+            int k = 3;
 
-            Console.WriteLine(string.Join(" ", result));
+            int[] ar = new int[] { 1, 3, 2, 6, 1, 2 };
+
+            int result = divisibleSumPairs(n, k, ar);
+
+            Console.WriteLine(result);
         }
     }
 }
