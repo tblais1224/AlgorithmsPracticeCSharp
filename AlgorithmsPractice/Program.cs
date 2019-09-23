@@ -5,53 +5,67 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace AlgorithmsPractice
 {
-    class Solution
+
+    public class MigratoryBirds
     {
-        public class SumPairs
+        public List<int> Birds { get; set; }
+        private Dictionary<int, int> _birds = new Dictionary<int, int>();
+        private int _mostFrequentBird;
+        public MigratoryBirds(List<int> birds)
         {
-            public int[] Array { get; set; }
-            public int Divisor { get; set; }
+            Birds = birds;
+            _mostFrequentBird = birds[0];
+        }
 
-            private int _numberOfPairs = 0;
-
-            public SumPairs(int[] array, int divisor)
+        public int MostFrequentBird()
+        {
+            BuildBirdDictionary();
+            foreach (var bird in _birds.Where(bird => bird.Value >= _birds[_mostFrequentBird]))
             {
-                Array = array;
-                Divisor = divisor;
+                if (bird.Key >= _mostFrequentBird && bird.Value == _birds[_mostFrequentBird]) continue;
+                _mostFrequentBird = bird.Key;
             }
 
-            public int GetDivisorPairs()
-            {
-                for (var i = 0; i < Array.Length; i++) GetPairsSum(Array[i], i + 1);
+            return _mostFrequentBird;
+        }
 
-                return _numberOfPairs;
-            }
-
-            private void GetPairsSum(int num, int numIndexPlusOne)
+        private void BuildBirdDictionary()
+        {
+            foreach (var id in Birds)
             {
-                for (var i = numIndexPlusOne; i < Array.Length; i++)
-                    if ((num + Array[i]) % Divisor == 0) _numberOfPairs++;
+                if (_birds.ContainsKey(id))
+                    AddToExistingBird(id);
+                else
+                    AddNewBirdToDictionary(id);
             }
         }
 
-        // Complete the divisibleSumPairs function below.
-        static int divisibleSumPairs(int n, int k, int[] ar)
+        private void AddNewBirdToDictionary(int id)
         {
-            var sumPairs = new SumPairs(ar, k);
-            return sumPairs.GetDivisorPairs();
+            _birds.Add(id, 1);
+        }
+
+        private void AddToExistingBird(int id)
+        {
+            _birds[id]++;
+        }
+    }
+    class Solution
+    {
+        static int migratoryBirds(List<int> arr)
+        {
+            var birds = new MigratoryBirds(arr);
+            return birds.MostFrequentBird();
         }
 
         static void Main(string[] args)
         {
-            int n = 6;
+            List<int> arr = new List<int>() { 1, 2, 3, 4, 5, 4, 3, 2, 1, 3, 4 };
 
-            int k = 3;
-
-            int[] ar = new int[] { 1, 3, 2, 6, 1, 2 };
-
-            int result = divisibleSumPairs(n, k, ar);
+            int result = migratoryBirds(arr);
 
             Console.WriteLine(result);
         }
+
     }
 }
