@@ -6,66 +6,40 @@ using System.Security.Cryptography.X509Certificates;
 namespace AlgorithmsPractice
 {
 
-    public class MigratoryBirds
+    public class ProgrammerDay
     {
-        public List<int> Birds { get; set; }
-        private Dictionary<int, int> _birds = new Dictionary<int, int>();
-        private int _mostFrequentBird;
-        public MigratoryBirds(List<int> birds)
+        public int Year { get; set; }
+
+        public ProgrammerDay(int year)
         {
-            Birds = birds;
-            _mostFrequentBird = birds[0];
+            Year = year;
         }
-
-        public int MostFrequentBird()
+        public String DayOfProgrammer()
         {
-            BuildBirdDictionary();
-            foreach (var bird in _birds.Where(bird => bird.Value >= _birds[_mostFrequentBird]))
-            {
-                if (bird.Key >= _mostFrequentBird && bird.Value == _birds[_mostFrequentBird]) continue;
-                _mostFrequentBird = bird.Key;
-            }
-
-            return _mostFrequentBird;
-        }
-
-        private void BuildBirdDictionary()
-        {
-            foreach (var id in Birds)
-            {
-                if (_birds.ContainsKey(id))
-                    AddToExistingBird(id);
-                else
-                    AddNewBirdToDictionary(id);
-            }
-        }
-
-        private void AddNewBirdToDictionary(int id)
-        {
-            _birds.Add(id, 1);
-        }
-
-        private void AddToExistingBird(int id)
-        {
-            _birds[id]++;
+            if (Year == 1918) return "26.09.1918";
+            else if (((Year <= 1917) && (Year % 4 == 0)) ||
+                     ((Year > 1918) && (Year % 400 == 0 || ((Year % 4 == 0) && (Year % 100 != 0)))))
+                return $"12.09.{Year}";
+            else return $"13.09.{Year}";
         }
     }
     class Solution
     {
-        static int migratoryBirds(List<int> arr)
+
+        // Complete the dayOfProgrammer function below.
+        static string dayOfProgrammer(int year)
         {
-            var birds = new MigratoryBirds(arr);
-            return birds.MostFrequentBird();
+            var dateClass = new ProgrammerDay(year);
+            return dateClass.DayOfProgrammer();
         }
 
         static void Main(string[] args)
         {
-            List<int> arr = new List<int>() { 1, 2, 3, 4, 5, 4, 3, 2, 1, 3, 4 };
+            int year = Convert.ToInt32(Console.ReadLine().Trim());
 
-            int result = migratoryBirds(arr);
+            string result = dayOfProgrammer(year);
 
             Console.WriteLine(result);
         }
-
     }
 }
