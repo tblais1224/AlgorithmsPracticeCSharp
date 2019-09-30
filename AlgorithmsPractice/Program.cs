@@ -5,28 +5,28 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace AlgorithmsPractice
 {
-    public class SumAll
-    {
-        public int[] ArrayNumbers { get; set; }
-
-        public SumAll(int[] arraysNumbers)
-        {
-            ArrayNumbers = arraysNumbers;
-        }
-
-        public int SumArray()
-        {
-            var result = 0;
-            for (int i = ArrayNumbers.Min(); i <= ArrayNumbers.Max(); i++) result += i;
-
-            return result;
-        }
-    }
     class Solution
     {
+
+        // Complete the bonAppetit function below.
+        static void bonAppetit(List<int> bill, int k, int b)
+        {
+
+
+        }
+
         static void Main(string[] args)
         {
 
+            int n = 4;
+
+            int k = 1;
+
+            List<int> bill = new List<int>() { 4, 10, 2, 9 };
+
+            int b = 12;
+
+            bonAppetit(bill, k, b);
         }
     }
 }
