@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace AlgorithmsPractice
 {
     public class FallingFruit
@@ -37,9 +38,9 @@ namespace AlgorithmsPractice
             return FruitLandingPosition(treeLocation, fruit).Count(landingPosition => landingPosition >= HouseStart && landingPosition <= HouseEnd);
         }
 
-        private static IEnumerable<int> FruitLandingPosition(int treeLocation, IEnumerable<int> apples)
+        private static IEnumerable<int> FruitLandingPosition(int treeLocation, IEnumerable<int> fruits)
         {
-            return apples.Select(apple => apple + treeLocation).ToList();
+            return fruits.Select(fruit => fruit + treeLocation).ToList();
         }
     }
 }
