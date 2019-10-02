@@ -1,56 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 
 namespace AlgorithmsPractice
 {
-    public class FoodBill
+    public class MagicSquares
     {
-        public List<int> Bill { get; set; }
-        public int Charged { get; set; }
-        public int IndexOfFoodNotEaten { get; set; }
-
-        public FoodBill(List<int> bill, int indexOfFoodNotEaten, int charged)
+        private readonly List<int[,]> _magicSquares = new List<int[,]>()
         {
-            Bill = bill;
-            Charged = charged;
-            IndexOfFoodNotEaten = indexOfFoodNotEaten;
+            new int[,] { { 8, 1, 6 }, { 3, 5, 7 }, { 4, 9, 2 } },
+            new int[,] { { 6, 1, 8 }, { 7, 5, 3 }, { 2, 9, 4 } },
+            new int[,] { { 4, 9, 2 }, { 3, 5, 7 }, { 8, 1, 6 } },
+            new int[,] { { 2, 9, 4 }, { 7, 5, 3 }, { 6, 1, 8 } },
+            new int[,] { { 8, 3, 4 }, { 1, 5, 9 }, { 6, 7, 2 } },
+            new int[,] { { 4, 3, 8 }, { 9, 5, 1 }, { 2, 7, 6 } },
+            new int[,] { { 6, 7, 2 }, { 1, 5, 9 }, { 8, 3, 4 } },
+            new int[,] { { 2, 7, 6 }, { 9, 5, 1 }, { 4, 3, 8 } },
+        };
+
+        public int[][] NotMagicSquare { get; set; }
+        public MagicSquares(int[][] notMagicSquare)
+        {
+            NotMagicSquare = notMagicSquare;
         }
 
-        public void SplitBill()
+        public int MinCostToMakeSquareMagic()
         {
-            var itemsEaten = new List<int>(Bill);
-            itemsEaten.RemoveAt(IndexOfFoodNotEaten);
-            if (Charged <= itemsEaten.Sum() / 2)
-                Console.WriteLine("Bon Appetit");
-            else
-                Console.WriteLine(Charged - (itemsEaten.Sum() / 2));
+            int minCost = 10000;
+            foreach (var magicSquare in _magicSquares)
+            {
+                if (CostToChangeSquare(magicSquare) < minCost) minCost = CostToChangeSquare(magicSquare);
+            }
+            return minCost;
+        }
+
+        private int CostToChangeSquare(int[,] magicSquare)
+        {
+            int cost = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    cost += Math.Abs(magicSquare[i, j] - NotMagicSquare[i][j]);
+                }
+            }
+            return cost;
         }
     }
-
-
-    class Solution
+    static class Program
     {
-        // Complete the bonAppetit function below.
-        static void bonAppetit(List<int> bill, int k, int b)
+        static int formingMagicSquare(int[][] s)
         {
-            new FoodBill(bill, k, b).SplitBill();
+
+            return new MagicSquares(s).MinCostToMakeSquareMagic();
         }
-
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            int[][] s = new int[3][] { };
 
-            int n = 4;
+            int result = formingMagicSquare(s);
 
-            int k = 1;
-
-            List<int> bill = new List<int>() { 4, 10, 2, 9 };
-
-            int b = 12;
-
-            bonAppetit(bill, k, b);
+            Console.WriteLine(result);
         }
     }
 }
