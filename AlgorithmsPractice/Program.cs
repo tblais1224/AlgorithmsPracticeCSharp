@@ -1,67 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace AlgorithmsPractice
 {
-    public class MagicSquares
+    public class HighScores
     {
-        private readonly List<int[,]> _magicSquares = new List<int[,]>()
-        {
-            new int[,] { { 8, 1, 6 }, { 3, 5, 7 }, { 4, 9, 2 } },
-            new int[,] { { 6, 1, 8 }, { 7, 5, 3 }, { 2, 9, 4 } },
-            new int[,] { { 4, 9, 2 }, { 3, 5, 7 }, { 8, 1, 6 } },
-            new int[,] { { 2, 9, 4 }, { 7, 5, 3 }, { 6, 1, 8 } },
-            new int[,] { { 8, 3, 4 }, { 1, 5, 9 }, { 6, 7, 2 } },
-            new int[,] { { 4, 3, 8 }, { 9, 5, 1 }, { 2, 7, 6 } },
-            new int[,] { { 6, 7, 2 }, { 1, 5, 9 }, { 8, 3, 4 } },
-            new int[,] { { 2, 7, 6 }, { 9, 5, 1 }, { 4, 3, 8 } },
-        };
+        public List<int> Scores { get; set; }
 
-        public int[][] NotMagicSquare { get; set; }
-        public MagicSquares(int[][] notMagicSquare)
+        public HighScores(int[] scores)
         {
-            NotMagicSquare = notMagicSquare;
+            Scores = scores.ToList();
         }
 
-        public int MinCostToMakeSquareMagic()
+        public int[] ScoreRankings(int[] checkScores)
         {
-            int minCost = 10000;
-            foreach (var magicSquare in _magicSquares)
-            {
-                if (CostToChangeSquare(magicSquare) < minCost) minCost = CostToChangeSquare(magicSquare);
-            }
-            return minCost;
-        }
+            var rankings = new List<int>();
+            var noDuplicateScores = RemoveDuplicates(Scores);
 
-        private int CostToChangeSquare(int[,] magicSquare)
-        {
-            int cost = 0;
-            for (int i = 0; i < 3; i++)
+            foreach (var score in checkScores)
             {
-                for (int j = 0; j < 3; j++)
+                for (var i = 0; i <= noDuplicateScores.Count; i++)
                 {
-                    cost += Math.Abs(magicSquare[i, j] - NotMagicSquare[i][j]);
+                    if (i == noDuplicateScores.Count || score >= noDuplicateScores[i])
+                    {
+                        rankings.Add(i + 1);
+                        break;
+                    }
                 }
             }
-            return cost;
+
+            return rankings.ToArray();
+        }
+
+        private List<int> RemoveDuplicates(List<int> withDuplicates)
+        {
+            return withDuplicates.Distinct().ToList();
         }
     }
     static class Program
     {
-        static int formingMagicSquare(int[][] s)
+        static int[] climbingLeaderboard(int[] scores, int[] alice)
         {
-
-            return new MagicSquares(s).MinCostToMakeSquareMagic();
+            return new HighScores(scores).ScoreRankings(alice);
         }
         private static void Main(string[] args)
         {
-            int[][] s = new int[3][] { };
+            int scoresCount = 6;
+            int[] scores = { 100, 90, 90, 80, 75, 60 };
 
-            int result = formingMagicSquare(s);
+            int aliceCount = 5;
+            int[] alice = { 50, 65, 77, 90, 102 };
 
-            Console.WriteLine(result);
+            int[] result = climbingLeaderboard(scores, alice);
+
+            Console.WriteLine(string.Join("\n", result));
         }
     }
 }
