@@ -4,57 +4,45 @@ using System.Linq;
 
 namespace AlgorithmsPractice
 {
-    public class HighScores
+    static class Solution
     {
-        public List<int> Scores { get; set; }
 
-        public HighScores(int[] scores)
+        // Complete the countingValleys function below.
+        static int countingValleys(int n, string s)
         {
-            Scores = scores.ToList();
-        }
+            var valleys = 0;
+            var checkPosition = 0;
 
-        public int[] ScoreRankings(int[] checkScores)
-        {
-            var rankings = new List<int>();
-            var noDuplicateScores = RemoveDuplicates(Scores);
-
-            foreach (var score in checkScores)
+            foreach (var letter in s)
             {
-                for (var i = 0; i <= noDuplicateScores.Count; i++)
+                if (letter == 'U')
                 {
-                    if (i == noDuplicateScores.Count || score >= noDuplicateScores[i])
-                    {
-                        rankings.Add(i + 1);
-                        break;
-                    }
+                    checkPosition++;
+                }
+                else if (checkPosition == 0)
+                {
+                    valleys++;
+                    checkPosition--;
+                }
+                else
+                {
+                    checkPosition--;
                 }
             }
 
-            return rankings.ToArray();
+            return valleys;
         }
 
-        private List<int> RemoveDuplicates(List<int> withDuplicates)
+        static void Main(string[] args)
         {
-            return withDuplicates.Distinct().ToList();
-        }
-    }
-    static class Program
-    {
-        static int[] climbingLeaderboard(int[] scores, int[] alice)
-        {
-            return new HighScores(scores).ScoreRankings(alice);
-        }
-        private static void Main(string[] args)
-        {
-            int scoresCount = 6;
-            int[] scores = { 100, 90, 90, 80, 75, 60 };
+            int n = 12;
 
-            int aliceCount = 5;
-            int[] alice = { 50, 65, 77, 90, 102 };
+            string s = "DDUUDDUDUUUD";
 
-            int[] result = climbingLeaderboard(scores, alice);
+            int result = countingValleys(n, s);
 
-            Console.WriteLine(string.Join("\n", result));
+            Console.WriteLine(result);
+
         }
     }
 }
