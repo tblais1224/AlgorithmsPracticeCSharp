@@ -4,57 +4,83 @@ using System.Linq;
 
 namespace AlgorithmsPractice
 {
-    public class HighScores
+    public class DnaHealth
     {
-        public List<int> Scores { get; set; }
+        public string[] Genes { get; set; }
+        public int[] GeneHealth { get; set; }
 
-        public HighScores(int[] scores)
+        private int _bestHealth = 0;
+        private int _worstHealth = 10000000;
+
+
+        public DnaHealth(string[] genes, int[] geneHealth)
         {
-            Scores = scores.ToList();
+            Genes = genes;
+            GeneHealth = geneHealth;
+
         }
 
-        public int[] ScoreRankings(int[] checkScores)
+        public int GetHealth(int first, int last, string dna)
         {
-            var rankings = new List<int>();
-            var noDuplicateScores = RemoveDuplicates(Scores);
+            var health = 0;
 
-            foreach (var score in checkScores)
+            for (int i = first; i <= last; i++)
             {
-                for (var i = 0; i <= noDuplicateScores.Count; i++)
+                for (int dnaIndex = 0; dnaIndex < dna.Length; dnaIndex++)
                 {
-                    if (i == noDuplicateScores.Count || score >= noDuplicateScores[i])
+                    if (dna.Length - dnaIndex >= Genes[i].Length && Genes[i] == dna.Substring(dnaIndex, Genes[i].Length))
                     {
-                        rankings.Add(i + 1);
-                        break;
+                        health += GeneHealth[i];
                     }
                 }
             }
 
-            return rankings.ToArray();
+            SetBestWorstHealth(health);
+            return health;
         }
 
-        private List<int> RemoveDuplicates(List<int> withDuplicates)
+        private void SetBestWorstHealth(int health)
         {
-            return withDuplicates.Distinct().ToList();
+            if (health > _bestHealth) _bestHealth = health;
+            if (health < _worstHealth) _worstHealth = health;
         }
+
+        public void PrintBestAndWorstHealth()
+        {
+            Console.WriteLine("{0} {1}", _worstHealth, _bestHealth);
+        }
+
     }
-    static class Program
+    class Solution
     {
-        static int[] climbingLeaderboard(int[] scores, int[] alice)
+
+        static void Main(string[] args)
         {
-            return new HighScores(scores).ScoreRankings(alice);
-        }
-        private static void Main(string[] args)
-        {
-            int scoresCount = 6;
-            int[] scores = { 100, 90, 90, 80, 75, 60 };
+            int n = 6;
 
-            int aliceCount = 5;
-            int[] alice = { 50, 65, 77, 90, 102 };
+            string[] genes = { "a", "b", "c", "aa", "d", "b" };
 
-            int[] result = climbingLeaderboard(scores, alice);
+            int[] health = { 1, 2, 3, 4, 5, 6 };
 
-            Console.WriteLine(string.Join("\n", result));
+            var dnaHealth = new DnaHealth(genes, health);
+
+            int s = 3;
+
+            string[] inputs = { "1 5 caaab", "0 4 xyz", "2 4 bcdybc" };
+
+            foreach (var input in inputs)
+            {
+                string[] firstLastd = input.Split(' ');
+
+                int first = Convert.ToInt32(firstLastd[0]);
+
+                int last = Convert.ToInt32(firstLastd[1]);
+
+                string d = firstLastd[2];
+
+                dnaHealth.GetHealth(first, last, d);
+            }
+            dnaHealth.PrintBestAndWorstHealth();
         }
     }
 }
