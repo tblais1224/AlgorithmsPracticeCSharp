@@ -1,47 +1,45 @@
-﻿using System.CodeDom.Compiler;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
-using System.Text;
-using System;
 
 namespace AlgorithmsPractice
 {
     class Solution
     {
 
-        // Complete the repeatedString function below.
-        static long repeatedString(string s, long n)
+        // Complete the hourglassSum function below.
+        static int hourglassSum(int[][] arr)
         {
-            var result = n / s.Length * s.Count(c => c == 'a');
+            return GetSums(arr).Max();
 
-            for (int i = 0; i < n % s.Length; i++)
-                if (s[i] == 'a')
-                    result++;
+        }
 
-            return result;
-
+        static List<int> GetSums(int[][] arr)
+        {
+            var sums = new List<int>();
+            for (int i = 0; i <= arr[0].Length / 2; i++)
+            {
+                for (int j = 0; j <= arr[0].Length / 2; j++)
+                    sums.Add(arr[i][j] + arr[i][j + 1] + arr[i][j + 2] + arr[i + 1][j + 1] + arr[i + 2][j] + arr[i + 2][j + 1] + arr[i + 2][j + 2]);
+            }
+            return sums;
         }
 
         static void Main(string[] args)
         {
 
-            string s = Console.ReadLine();
+            int[][] arr = new int[6][];
 
-            long n = Convert.ToInt64(Console.ReadLine());
+            for (int i = 0; i < 6; i++)
+            {
+                arr[i] = Array.ConvertAll(Console.ReadLine().Split(' '), arrTemp => Convert.ToInt32(arrTemp));
+            }
 
-            long result = repeatedString(s, n);
+            int result = hourglassSum(arr);
 
             Console.WriteLine(result);
 
         }
     }
-
 }
