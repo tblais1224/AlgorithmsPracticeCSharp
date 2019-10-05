@@ -1,40 +1,47 @@
-﻿using System;
+﻿using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
 
 namespace AlgorithmsPractice
 {
     class Solution
     {
 
-        // Complete the jumpingOnClouds function below.
-        static int jumpingOnClouds(int[] c)
+        // Complete the repeatedString function below.
+        static long repeatedString(string s, long n)
         {
-            int jumps = 0;
+            var result = n / s.Length * s.Count(c => c == 'a');
 
-            for (int i = 0; i < c.Length - 1; i++)
-            {
-                if (i == c.Length - 2 || c[i + 2] == 1)
-                {
-                    jumps++;
-                }
-                else
-                {
-                    jumps++;
-                    i++;
-                }
-            }
+            for (int i = 0; i < n % s.Length; i++)
+                if (s[i] == 'a')
+                    result++;
 
-            return jumps;
+            return result;
+
         }
 
         static void Main(string[] args)
         {
-            int[] c = { 0, 0, 0, 1, 0, 0 };
 
-            int result = jumpingOnClouds(c);
+            string s = Console.ReadLine();
+
+            long n = Convert.ToInt64(Console.ReadLine());
+
+            long result = repeatedString(s, n);
 
             Console.WriteLine(result);
+
         }
     }
+
 }
