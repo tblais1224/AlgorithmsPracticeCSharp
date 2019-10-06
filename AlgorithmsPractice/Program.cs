@@ -1,40 +1,29 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 
 namespace AlgorithmsPractice
 {
     class Solution
     {
 
-        // Complete the rotLeft function below.
-        static int[] rotLeft(int[] a, int d)
+        // Complete the minimumBribes function below.
+        static void minimumBribes(int[] q)
         {
-            var arrayCopy = a.ToList();
-            for (int i = 0; i < d; i++)
-            {
-                arrayCopy.Add(arrayCopy[0]);
-                arrayCopy.RemoveAt(0);
-            }
 
-            return arrayCopy.ToArray();
+
         }
 
         static void Main(string[] args)
         {
+            int t = Convert.ToInt32(Console.ReadLine());
 
-            string[] nd = Console.ReadLine().Split(' ');
+            for (int tItr = 0; tItr < t; tItr++)
+            {
+                int n = Convert.ToInt32(Console.ReadLine());
 
-            int n = Convert.ToInt32(nd[0]);
-
-            int d = Convert.ToInt32(nd[1]);
-
-            int[] a = Array.ConvertAll(Console.ReadLine().Split(' '), aTemp => Convert.ToInt32(aTemp))
-                ;
-            int[] result = rotLeft(a, d);
-
-            Console.WriteLine(string.Join(" ", result));
-
+                int[] q = Array.ConvertAll(Console.ReadLine().Split(' '), qTemp => Convert.ToInt32(qTemp))
+                    ;
+                minimumBribes(q);
+            }
         }
     }
 }
