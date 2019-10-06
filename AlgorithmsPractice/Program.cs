@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -8,37 +7,33 @@ namespace AlgorithmsPractice
     class Solution
     {
 
-        // Complete the hourglassSum function below.
-        static int hourglassSum(int[][] arr)
+        // Complete the rotLeft function below.
+        static int[] rotLeft(int[] a, int d)
         {
-            return GetSums(arr).Max();
-
-        }
-
-        static List<int> GetSums(int[][] arr)
-        {
-            var sums = new List<int>();
-            for (int i = 0; i <= arr[0].Length / 2; i++)
+            var arrayCopy = a.ToList();
+            for (int i = 0; i < d; i++)
             {
-                for (int j = 0; j <= arr[0].Length / 2; j++)
-                    sums.Add(arr[i][j] + arr[i][j + 1] + arr[i][j + 2] + arr[i + 1][j + 1] + arr[i + 2][j] + arr[i + 2][j + 1] + arr[i + 2][j + 2]);
+                arrayCopy.Add(arrayCopy[0]);
+                arrayCopy.RemoveAt(0);
             }
-            return sums;
+
+            return arrayCopy.ToArray();
         }
 
         static void Main(string[] args)
         {
 
-            int[][] arr = new int[6][];
+            string[] nd = Console.ReadLine().Split(' ');
 
-            for (int i = 0; i < 6; i++)
-            {
-                arr[i] = Array.ConvertAll(Console.ReadLine().Split(' '), arrTemp => Convert.ToInt32(arrTemp));
-            }
+            int n = Convert.ToInt32(nd[0]);
 
-            int result = hourglassSum(arr);
+            int d = Convert.ToInt32(nd[1]);
 
-            Console.WriteLine(result);
+            int[] a = Array.ConvertAll(Console.ReadLine().Split(' '), aTemp => Convert.ToInt32(aTemp))
+                ;
+            int[] result = rotLeft(a, d);
+
+            Console.WriteLine(string.Join(" ", result));
 
         }
     }
