@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AlgorithmsPractice
 {
@@ -39,7 +37,6 @@ namespace AlgorithmsPractice
 
             if (check) Console.WriteLine("{0}", bribes);
         }
-
         static void Main(string[] args)
         {
             int t = Convert.ToInt32(Console.ReadLine());
