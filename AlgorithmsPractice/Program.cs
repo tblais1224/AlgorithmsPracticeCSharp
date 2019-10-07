@@ -4,71 +4,42 @@ using System.Linq;
 
 namespace AlgorithmsPractice
 {
-    public class NewYearChaos
-    {
-        private List<int> _startQueue = new List<int>();
-        public List<int> QueueFinalState { get; set; }
-
-        public NewYearChaos(int[] queueFinalState)
-        {
-            QueueFinalState = queueFinalState.ToList();
-
-        }
-
-        public void Bribes()
-        {
-            MakeStartQueue();
-
-            int bribes = 0;
-
-            for (int i = 0; i < QueueFinalState.Count; i++)
-            {
-                if (QueueFinalState[i] == _startQueue[i]) continue;
-                bribes = Bribe(i, bribes);
-            }
-
-            if (QueueFinalState == _startQueue)
-                Console.WriteLine("{0}", bribes);
-            else
-                Console.WriteLine("Too chaotic");
-        }
-
-        private int Bribe(int i, int bribes)
-        {
-            for (int j = 0; j < 2; j++)
-            {
-                if (QueueFinalState[i] == _startQueue[i]) break;
-                bribes++;
-                SwapInts(QueueFinalState[i] - j);
-            }
-
-            return bribes;
-        }
-
-        private void MakeStartQueue()
-        {
-            for (int i = 1; i <= QueueFinalState.Count; i++)
-                _startQueue.Add(i);
-        }
-
-        private void SwapInts(int ValueBribing)
-        {
-            int temp = _startQueue[ValueBribing - 2];
-            _startQueue[ValueBribing - 2] = _startQueue[ValueBribing - 1];
-            _startQueue[ValueBribing - 1] = temp;
-        }
-
-    }
-    class Solution
+    static class Solution
     {
 
         // Complete the minimumBribes function below.
         static void minimumBribes(int[] q)
         {
-            var bribes = new NewYearChaos(q);
-            bribes.Bribes();
+            int bribes = 0;
+            bool check = true;
+            int minNum = q.Length;
+            for (int i = q.Length - 1; i >= 0; i--)
+            {
+                if (q[i] - i > 3)
+                {
+                    Console.WriteLine("Too chaotic");
+                    check = false;
+                    break;
+                }
 
+                if (q[i] - 3 == i)
+                {
+                    bribes += 2;
+                }
+                else
+                {
+                    if (minNum > q[i])
+                        minNum = q[i];
+                    else if (q[i] != minNum)
+                    {
+                        bribes++;
+                    }
+                }
+            }
+
+            if (check) Console.WriteLine("{0}", bribes);
         }
+
 
         static void Main(string[] args)
         {
