@@ -1,60 +1,78 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace AlgorithmsPractice
 {
-    public class SwapArrays
+    public class ArrayManipulation
     {
-        public int[] UserArray { get; set; }
+        public int ArrayLength { get; set; }
+        public int[][] UserData { get; set; }
+        private long[] _newArray;
 
-        private int _swaps = 0;
-
-        public SwapArrays(int[] userArray)
+        public ArrayManipulation(int n, int[][] userData)
         {
-            UserArray = userArray;
+            ArrayLength = n;
+            UserData = userData;
+            _newArray = new long[ArrayLength + 2];
+
         }
 
-        public int OrderArray()
+        public long ManipulateArray()
         {
-            for (int i = UserArray.Length -1; i >= 0; i--)
+            foreach (var data in UserData)
             {
-                while (UserArray[i] != i + 1)
-                {
-                    Sort(i);
-                }
+                _newArray[data[0]] += data[2];
+                _newArray[data[1] + 1] -= data[2];
             }
 
-            return _swaps;
+            return GetMax();
         }
 
-        private void Sort(int index)
+        public long GetMax()
         {
-            var temp = UserArray[UserArray[index] - 1];
-            UserArray[UserArray[index] - 1] = UserArray[index];
-            UserArray[index] = temp;
-            _swaps++;
+            long max = 0;
+            long temp = 0;
+
+            foreach (var num in _newArray)
+            {
+                temp += num;
+                if (temp > max) max = temp;
+            }
+
+            return max;
         }
+
     }
     class Solution
     {
 
-        // Complete the minimumSwaps function below.
-        static int minimumSwaps(int[] arr)
+        // Complete the arrayManipulation function below.
+        static long arrayManipulation(int n, int[][] queries)
         {
-            var orderArray = new SwapArrays(arr);
-            return orderArray.OrderArray();
-
+            return new ArrayManipulation(n, queries).ManipulateArray();
         }
 
         static void Main(string[] args)
         {
-            int n = Convert.ToInt32(Console.ReadLine());
 
-            int[] arr = Array.ConvertAll(Console.ReadLine().Split(' '), arrTemp => Convert.ToInt32(arrTemp))
-                ;
-            int res = minimumSwaps(arr);
 
-            Console.WriteLine(res);
+            string[] nm = Console.ReadLine().Split(' ');
+
+            int n = Convert.ToInt32(nm[0]);
+
+            int m = Convert.ToInt32(nm[1]);
+
+            int[][] queries = new int[m][];
+
+            for (int i = 0; i < m; i++)
+            {
+                queries[i] = Array.ConvertAll(Console.ReadLine().Split(' '), queriesTemp => Convert.ToInt32(queriesTemp));
+            }
+
+            long result = arrayManipulation(n, queries);
+
+            Console.WriteLine(result);
 
         }
     }
