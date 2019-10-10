@@ -1,79 +1,69 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using System.Security.Policy;
 
 namespace AlgorithmsPractice
 {
-    public class ArrayManipulation
+
+    public class RansomNote
     {
-        public int ArrayLength { get; set; }
-        public int[][] UserData { get; set; }
-        private long[] _newArray;
+        public Dictionary<string, int> Magazine { get; set; }
 
-        public ArrayManipulation(int n, int[][] userData)
+        public string[] Note { get; set; }
+
+        public RansomNote(string[] note)
         {
-            ArrayLength = n;
-            UserData = userData;
-            _newArray = new long[ArrayLength + 2];
-
+            Note = note;
         }
 
-        public long ManipulateArray()
+        private void BuildDictionary(string[] magazine)
         {
-            foreach (var data in UserData)
+            Magazine = new Dictionary<string, int>();
+            foreach (var word in magazine)
             {
-                _newArray[data[0]] += data[2];
-                _newArray[data[1] + 1] -= data[2];
+                if (!Magazine.ContainsKey(word)) Magazine.Add(word, 1);
+                else Magazine[word]++;
+            }
+        }
+
+        public string CanMakeRansomNote(string[] magazine)
+        {
+            BuildDictionary(magazine);
+
+            foreach (var word in Note)
+            {
+                if (!Magazine.ContainsKey(word) || Magazine[word] == 0) return "No";
+                else Magazine[word]--;
             }
 
-            return GetMax();
+            return "Yes";
         }
-
-        public long GetMax()
-        {
-            long max = 0;
-            long temp = 0;
-
-            foreach (var num in _newArray)
-            {
-                temp += num;
-                if (temp > max) max = temp;
-            }
-
-            return max;
-        }
-
     }
     class Solution
     {
 
-        // Complete the arrayManipulation function below.
-        static long arrayManipulation(int n, int[][] queries)
+        // Complete the checkMagazine function below.
+        static void checkMagazine(string[] magazine, string[] note)
         {
-            return new ArrayManipulation(n, queries).ManipulateArray();
+            var ransom = new RansomNote(note);
+            Console.WriteLine(ransom.CanMakeRansomNote(magazine));
+
         }
 
         static void Main(string[] args)
         {
+            string[] mn = Console.ReadLine().Split(' ');
 
+            int m = Convert.ToInt32(mn[0]);
 
-            string[] nm = Console.ReadLine().Split(' ');
+            int n = Convert.ToInt32(mn[1]);
 
-            int n = Convert.ToInt32(nm[0]);
+            string[] magazine = Console.ReadLine().Split(' ');
 
-            int m = Convert.ToInt32(nm[1]);
+            string[] note = Console.ReadLine().Split(' ');
 
-            int[][] queries = new int[m][];
-
-            for (int i = 0; i < m; i++)
-            {
-                queries[i] = Array.ConvertAll(Console.ReadLine().Split(' '), queriesTemp => Convert.ToInt32(queriesTemp));
-            }
-
-            long result = arrayManipulation(n, queries);
-
-            Console.WriteLine(result);
-
+            checkMagazine(magazine, note);
         }
     }
 }
