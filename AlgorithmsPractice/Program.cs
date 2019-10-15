@@ -1,24 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 
 namespace AlgorithmsPractice
 {
+    public class Anagrams
+    {
+        public string InputString { get; set; }
+
+        public Anagrams(string inputString)
+        {
+            InputString = inputString;
+        }
+
+        private Dictionary<string, int> AllPossibleSubstrings()
+        {
+            var substrings = new Dictionary<string, int>();
+        }
+    }
     class Solution
     {
 
-        // Complete the twoStrings function below.
-        static string twoStrings(string s1, string s2)
+        // Complete the sherlockAndAnagrams function below.
+        static int sherlockAndAnagrams(string s)
         {
-            return s2.Any(MakeDictionary(s1).ContainsValue) ? "YES" : "NO";
-        }
-        static Dictionary<int, char> MakeDictionary(string s1)
-        {
-            var s1Dict = new Dictionary<int, char>();
-            foreach (var letter in s1.Where(letter => !s1Dict.ContainsValue(letter)))
-                s1Dict.Add(s1.IndexOf(letter), letter);
+            var anagrams = new Anagrams(s);
 
-            return s1Dict;
         }
 
         static void Main(string[] args)
@@ -28,11 +35,9 @@ namespace AlgorithmsPractice
 
             for (int qItr = 0; qItr < q; qItr++)
             {
-                string s1 = Console.ReadLine();
+                string s = Console.ReadLine();
 
-                string s2 = Console.ReadLine();
-
-                string result = twoStrings(s1, s2);
+                int result = sherlockAndAnagrams(s);
 
                 Console.WriteLine(result);
             }
