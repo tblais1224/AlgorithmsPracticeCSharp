@@ -1,46 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 
-namespace AlgorithmsPractice
+class Solution
 {
-    public class Anagrams
+
+    // Complete the catAndMouse function below.
+    static string catAndMouse(int x, int y, int z)
     {
-        public string InputString { get; set; }
-
-        public Anagrams(string inputString)
-        {
-            InputString = inputString;
-        }
-
-        private Dictionary<string, int> AllPossibleSubstrings()
-        {
-            var substrings = new Dictionary<string, int>();
-        }
+        return Math.Abs(z - x) == Math.Abs(z - y) ? "Mouse C" : Math.Abs(z - x) > Math.Abs(z - y) ? "Cat B" : "Cat A";
     }
-    class Solution
+
+    static void Main(string[] args)
     {
 
-        // Complete the sherlockAndAnagrams function below.
-        static int sherlockAndAnagrams(string s)
+        int q = Convert.ToInt32(Console.ReadLine());
+
+        for (int qItr = 0; qItr < q; qItr++)
         {
-            var anagrams = new Anagrams(s);
+            string[] xyz = Console.ReadLine().Split(' ');
 
-        }
+            int x = Convert.ToInt32(xyz[0]);
 
-        static void Main(string[] args)
-        {
+            int y = Convert.ToInt32(xyz[1]);
 
-            int q = Convert.ToInt32(Console.ReadLine());
+            int z = Convert.ToInt32(xyz[2]);
 
-            for (int qItr = 0; qItr < q; qItr++)
-            {
-                string s = Console.ReadLine();
+            string result = catAndMouse(x, y, z);
 
-                int result = sherlockAndAnagrams(s);
-
-                Console.WriteLine(result);
-            }
+            Console.WriteLine(result);
         }
     }
 }
