@@ -15,120 +15,24 @@ using System;
 class Solution
 {
 
-    class DoublyLinkedListNode
+    // Complete the stepPerms function below.
+    static int stepPerms(int n)
     {
-        public int data;
-        public DoublyLinkedListNode next;
-        public DoublyLinkedListNode prev;
 
-        public DoublyLinkedListNode(int nodeData)
-        {
-            this.data = nodeData;
-            this.next = null;
-            this.prev = null;
-        }
-    }
 
-    class DoublyLinkedList
-    {
-        public DoublyLinkedListNode head;
-        public DoublyLinkedListNode tail;
-
-        public DoublyLinkedList()
-        {
-            this.head = null;
-            this.tail = null;
-        }
-
-        public void InsertNode(int nodeData)
-        {
-            DoublyLinkedListNode node = new DoublyLinkedListNode(nodeData);
-
-            if (this.head == null)
-            {
-                this.head = node;
-            }
-            else
-            {
-                this.tail.next = node;
-                node.prev = this.tail;
-            }
-
-            this.tail = node;
-        }
-    }
-
-    static void PrintDoublyLinkedList(DoublyLinkedListNode node, string sep, TextWriter textWriter)
-    {
-        while (node != null)
-        {
-            textWriter.Write(node.data);
-
-            node = node.next;
-
-            if (node != null)
-            {
-                textWriter.Write(sep);
-            }
-        }
-    }
-
-    // Complete the reverse function below.
-
-    /*
-     * For your reference:
-     *
-     * DoublyLinkedListNode {
-     *     int data;
-     *     DoublyLinkedListNode next;
-     *     DoublyLinkedListNode prev;
-     * }
-     *
-     */
-    static DoublyLinkedListNode reverse(DoublyLinkedListNode head)
-    {
-        var stackOfNodes = new List<DoublyLinkedListNode>();
-
-        while (head != null)
-        {
-            stackOfNodes.Add(head);
-            head = head.next;
-        }
-
-        for (int i = stackOfNodes.Count -1; i >= 0 ; i--)
-        {
-            stackOfNodes[i].next = i == 0 ? null : stackOfNodes[i - 1];
-            stackOfNodes[i].prev = i == stackOfNodes.Count - 1 ? null : stackOfNodes[i + 1];
-        }
-
-        return stackOfNodes[stackOfNodes.Count-1];
     }
 
     static void Main(string[] args)
     {
-        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+        int s = Convert.ToInt32(Console.ReadLine());
 
-        int t = Convert.ToInt32(Console.ReadLine());
-
-        for (int tItr = 0; tItr < t; tItr++)
+        for (int sItr = 0; sItr < s; sItr++)
         {
-            DoublyLinkedList llist = new DoublyLinkedList();
+            int n = Convert.ToInt32(Console.ReadLine());
 
-            int llistCount = Convert.ToInt32(Console.ReadLine());
+            int res = stepPerms(n);
 
-            for (int i = 0; i < llistCount; i++)
-            {
-                int llistItem = Convert.ToInt32(Console.ReadLine());
-                llist.InsertNode(llistItem);
-            }
-
-            DoublyLinkedListNode llist1 = reverse(llist.head);
-
-            PrintDoublyLinkedList(llist1, " ", textWriter);
-            textWriter.WriteLine();
+            Console.WriteLine(res);
         }
-
-        textWriter.Flush();
-        textWriter.Close();
     }
 }
